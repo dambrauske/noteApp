@@ -12,17 +12,17 @@ const appSlice = createSlice({
     addNote: (state, action: PayloadAction<Note>) => {
       state.notes.push(action.payload);
     },
-    changeViewToFolders: (state) => {
+    setViewToFolders: (state) => {
       state.notesView = false
       state.foldersView = true
     },
-    changeViewToNotes: (state) => {
+    setViewToNotes: (state) => {
       state.notesView = true
       state.foldersView = false
     },
   },
 });
 
-export const { addNote, changeViewToFolders, changeViewToNotes } = appSlice.actions;
+export const { addNote, setViewToFolders, setViewToNotes } = appSlice.actions;
 
 export default appSlice.reducer;
