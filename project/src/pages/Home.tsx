@@ -10,7 +10,7 @@ const Home = () => {
     const foldersView = useAppSelector(state => state.app.foldersView)
 
     return (
-        <div className="p-4 relative min-h-screen">
+        <div className="p-4 relative min-h-screen bg-slate-50">
             <Header/>
             <Navbar/>
 

@@ -18,8 +18,8 @@ const Navbar = () => {
   return (
     <nav>
       <ul className="flex justify-around p-4">
-        <li className={`cursor-pointer rounded-xl px-4 ${notesView ? 'bg-blue-100' : null }`} onClick={showNotes}>Notes</li>
-        <li className={`cursor-pointer rounded-xl px-4 ${foldersView ? 'bg-blue-100' : null }`} onClick={showFolders}>Folders</li>
+        <li className={`cursor-pointer rounded-xl px-4 font-bold  ${notesView ? 'bg-indigo-200' : null }`} onClick={showNotes}>Notes</li>
+        <li className={`cursor-pointer rounded-xl px-4 font-bold  ${foldersView ? 'bg-indigo-200' : null }`} onClick={showFolders}>Folders</li>
       </ul>
     </nav>
   );
