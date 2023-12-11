@@ -1,16 +1,19 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { AppInitialState, Note } from "../interfaces";
 
+const notes: Note[] = JSON.parse(localStorage.getItem("notes") ?? '[]')
+
 const appSlice = createSlice({
   name: "app",
   initialState: {
-    notes: [],
+    notes,
     notesView: true,
     foldersView: false,
   } as AppInitialState,
   reducers: {
     addNote: (state, action: PayloadAction<Note>) => {
       state.notes.push(action.payload);
+      localStorage.setItem("notes", JSON.stringify(state.notes))
     },
     setViewToFolders: (state) => {
       state.notesView = false

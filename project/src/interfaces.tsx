@@ -3,7 +3,7 @@ export interface Note {
     title: string,
     text: string,
     color: string,
-    date: Date,
+    date: string,
 }
 
 export interface AppInitialState {
