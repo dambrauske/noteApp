@@ -21,17 +21,13 @@ const NewNote = () => {
   const titleRef = useRef<HTMLInputElement>(null)
   const textRef = useRef<HTMLTextAreaElement>(null)
 
-  const generateId = () => {
-    return Math.floor(Math.random() * Date.now())
-  }
-
-  const formatDate = () => {
-    const date = new Date()
-    const year = date.getFullYear()
-    const month = date.getMonth() + 1
-    const day = date.getDate()
-    return `${year}-${month}-${day}`
-  }
+  // const formatDate = () => {
+  //   const date = new Date()
+  //   const year = date.getFullYear()
+  //   const month = date.getMonth() + 1
+  //   const day = date.getDate()
+  //   return `${year}-${month}-${day}`
+  // }
 
   const saveNote = () => {
     const title = titleRef?.current?.value ?? ""
@@ -40,11 +36,9 @@ const NewNote = () => {
     if (title === "" && text === "") return setErrorMessage("Please insert a title or a note")
 
     const newNote: Note = {
-      id: generateId(),
       title,
       text,
       color: bgColor,
-      date: formatDate(),
     }
 
     dispatch(addNote(newNote))
