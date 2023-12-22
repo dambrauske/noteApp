@@ -1,16 +1,53 @@
-import { registerForm } from "../interfaces";
+import { useNavigate } from "react-router-dom";
+import { addUser, setToken } from "../features/appSlice";
+import { useAppDispatch } from "../hooks";
+import { RegisterForm } from "../interfaces";
 import { useForm, SubmitHandler } from "react-hook-form";
 
 const Register = () => {
+  const dispatch = useAppDispatch();
+  const navigate = useNavigate();
+
   const {
     register,
     handleSubmit,
     watch,
     formState: { errors },
-  } = useForm<registerForm>();
+  } = useForm<RegisterForm>();
 
-  const onSubmit: SubmitHandler<registerForm> = (data) => {
+  const onSubmit: SubmitHandler<RegisterForm> = async (data) => {
     console.log(data);
+
+    const newUser = {
+      name: data.name,
+      email: data.email,
+      password: data.password,
+    };
+
+    const options = {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(newUser),
+    };
+
+    try {
+      const response = await fetch("http://localhost:8000/register", options);
+      const data = await response.json();
+      if (data.error === false) {
+        console.log(data);
+        dispatch(addUser(data.data.user));
+        dispatch(setToken(data.data.token));
+        navigate("/");
+      }
+      if (data.error === true) {
+        console.log(data);
+        alert(data.message);
+      }
+    } catch (error) {
+      console.log(error);
+    }
   };
 
   return (
@@ -35,9 +72,7 @@ const Register = () => {
         />
         <div className="h-2 flex justify-center items-center">
           {errors.name && (
-            <div className="text-xs text-red-600">
-              {errors.name.message}
-            </div>
+            <div className="text-xs text-red-600">{errors.name.message}</div>
           )}
         </div>
         <input
@@ -58,11 +93,9 @@ const Register = () => {
           type="email"
           placeholder="email"
         />
-         <div className="h-2 flex justify-center items-center">
+        <div className="h-2 flex justify-center items-center">
           {errors.email && (
-            <div className="text-xs text-red-600">
-              {errors.email.message}
-            </div>
+            <div className="text-xs text-red-600">{errors.email.message}</div>
           )}
         </div>
         <input
