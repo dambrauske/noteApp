@@ -3,6 +3,8 @@ import { useAppSelector } from "../hooks";
 
 const Notes = () => {
   const notes = useAppSelector((state) => state.app.notes);
+  console.log(notes);
+  
 
   return (
     <div className="grid md:grid-cols-3 gap-4">

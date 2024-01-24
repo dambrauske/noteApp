@@ -1,4 +1,4 @@
-import { useRef, useState } from "react";
+import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Note, NoteForm } from "../interfaces";
 import { useAppDispatch } from "../hooks";
@@ -25,6 +25,10 @@ const NewNote = () => {
   ];
   const token = localStorage.getItem("token");
 
+  const handleColorChange = (color: string) => {
+    setBgColor(color);
+  };
+
   const optionsHelper = (options: {
     method: "GET" | "POST" | "PUT" | "DELETE";
     headers?: { "content-type"?: string; Authorization?: string };
@@ -47,7 +51,7 @@ const NewNote = () => {
   const onSubmit: SubmitHandler<NoteForm> = async (data) => {
     const title = data.title;
     const text = data.text;
-    const color = data.color ?? "bg-blue-100";
+    const color = bgColor;
 
     const options = optionsHelper({
       method: "POST",
@@ -60,7 +64,7 @@ const NewNote = () => {
       if (data.error === false) {
         console.log(data);
         console.log("token", data.data.token);
-        dispatch(setNotes(data.data.notes));
+        dispatch(setNotes(data.data));
         navigate("/");
       }
     } catch (error) {
@@ -79,15 +83,15 @@ const NewNote = () => {
       </button>
       <div className=" flex flex-col items-center">
         <div className={`rounded-lg border p-2 ${bgColor} md:w-1/3`}>
-          <ul className="flex gap-2 justify-end">
+          <div {...register("color")} className="flex gap-2 justify-end">
             {bgColors.map((color, i) => (
-              <li
+              <div
                 key={i}
-                onClick={() => setBgColor(color)}
+                onClick={() => handleColorChange(color)}
                 className={`w-6 h-6 rounded-full ${color} border border-slate-300 cursor-pointer`}
-              ></li>
+              ></div>
             ))}
-          </ul>
+          </div>
 
           <form
             onSubmit={handleSubmit(onSubmit)}
